@@ -3,6 +3,21 @@ bbripper
 
 Project to scrape/rip certain content from the web
 
+Requirements:
+- python / Jython
+- mozilla firefox (current version)
+- scrapy 0.16 
+- sikuli 1.0.0
+- ImageMagick + textcleaner
+- tesseract-ocr
+- pdfocr (modified) + option-modifier script
+
+Hardware/OS requirements:
+- Linux initial support (ubuntu/unity), should work on Windows and Mac too
+- approx 200GB disk space (possibly more)
+- possible integration with VPS/cloud servers
+
+
 Objective:
 - Mirror complete structure of Bluebook archive on ______.com (using scrapy)
 - Download each image as JPEG into appropriate folder (using sikuli)
