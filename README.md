@@ -11,4 +11,3 @@ Objective:
 	- use tesseract-ocr , follow pdfocr as example
 	- use textcleaner to prime jpeg image http://www.fmwconcepts.com/imagemagick/textcleaner/index.php
 	- possibly use some adaptive algorithm as outlined on http://vbridge.co.uk/2012/11/05/how-we-tuned-tesseract-to-perform-as-well-as-a-commercial-ocr-package/
-	
