@@ -5,9 +5,10 @@ Project to scrape/rip certain content from the web
 
 Requirements:
 - Jython
+- Java 7 JRE
 - mozilla firefox (current version)
-- scrapy 0.16 
-- sikuli 1.0.0
+- scrapy 0.16 or later
+- sikuli 1.0.0 or later
 - ImageMagick + textcleaner
 - tesseract-ocr
 - pdfocr (modified) + option-modifier script
