@@ -70,7 +70,27 @@
 <h2>sikuli.sikuli</h2> <a href="sikuli.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
-<span class="skw">click</span>(<img src="1369700144268.png" />)
+<span class="kw">from</span> sikuli.Sikuli <span class="kw">import</span> *
+
+<span class="kw">class</span> Foxenbeef(object):
+
+    <span class="kw">def</span> startenAppen(self):
+        ff = App.open(<span class="str">"/usr/bin/firefox http://www.fold3.com/image/7072575/"</span>)
+        <span class="skw">wait</span>(<span class="dig">8</span>)
+        <span class="skw">click</span>(<img src="1369871703300.png" />)
+        <span class="skw">click</span>(<img src="1369871760039.png" />)
+
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+        ff.focus(<span class="str">"Select location for download by www.fold3.com"</span>)
+
+        <span class="skw">click</span>(<img src="1369909550312.png" />)
+
+        <span class="skw">click</span>(<img src="1369909288226.png" />)
+
+
+
+beefnhelda = Foxenbeef()
+beefnhelda.startenAppen()
 </pre>
 </body>
 </html>
