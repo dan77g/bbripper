@@ -15,6 +15,7 @@ class ScrippaSpider(BaseSpider):
     ]
     
     def parse(self, response):
+        print "Starting a parse ......"
         hxs = HtmlXPathSelector(response)
         yearLinks = hxs.select('//div[@id="browse"]/ul/li')
         urlbase="http://www.fold3.com"
