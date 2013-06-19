@@ -16,6 +16,7 @@ class ScrippaSpider(BaseSpider):
     ]
     
     def parse(self, response):
+	log.msg("mooooooooooooooooooonkety nusiness", level=log.DEBUG)
         print "Starting a parse ......"
         hxs = HtmlXPathSelector(response)
         yearLinks = hxs.select('//div[@id="browse"]/ul/li')
@@ -32,7 +33,6 @@ class ScrippaSpider(BaseSpider):
             item['year_url'] = year_url
             item['year'] = year           
             items.append(item)
-            self.log("Looking at year " + year, level=log.WARNING)
             yield Request(url=year_url, meta={'yearitem': item}, callback=self.parse_year)
 
 
@@ -54,55 +54,6 @@ class ScrippaSpider(BaseSpider):
             month_url = urlbase + month_url             
             yritem['month_url'] = month_url
             yritem['month'] = month  
-            yield Request(url=month_url, meta={'monthitem': yritem}, callback=self.parse_month)
-            
+            # yield Request(url=month_url, meta={'monthitem': yritem}, callback=self.parse_month)
 
-    def parse_month(self, response):
-        mnitem = response.meta['monthitem']
-               
-        # get report url and go to it
-        hxs = HtmlXPathSelector(response)
-        reportLinks = hxs.select('//div[@id="browse"]/ul/li')
-        month_title = hxs.select('//h1/text()').extract()[0]
-        mnitem['month_title'] = month_title
-        mnitem['month'] = month_title
-        urlbase="http://www.fold3.com"
-        
-        for link in reportLinks:
-            report_url = link.select('a/@href').extract()[0]
-            report = link.select('a/strong/text()').extract()[0]
-            report_url = urlbase + report_url
-            mnitem['report_url'] = report_url
-            mnitem['report'] = report
-            
-                        
-            print "======================="
-            print "YEAR is " + mnitem['year']
-            print "MONTH is " + mnitem['month']
-            print "REPORT is " + mnitem['report']
-            print "REPORT URL is " + mnitem['report_url']
-            yield Request(url=report_url, meta={'reportitem': mnitem}, callback=self.parse_report)
-
-            
-        #return mnitem
-
-    def parse_report(self, response):
-        repitem = response.meta['reportitem']
-        
-        hxs = HtmlXPathSelector(response)
-        imageLinks = hxs.select('//div[@id="browse"]/ul/li')
-        urlbase="http://www.fold3.com"
-        
-        for link in imageLinks:
-            img_url = link.select('a/@href').extract()[0]
-            img_page = link.select('a/@title').extract()[0]
-            img_url = urlbase + img_url
-            repitem['img_url'] = img_url
-            
-            print "found img at " 
-            print img_url 
-            print " of page # "
-            print img_page
-            
-        return repitem
-            
+	return yritem
