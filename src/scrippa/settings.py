@@ -13,3 +13,7 @@ NEWSPIDER_MODULE = 'scrippa.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'scrippa (+http://www.yourdomain.com)'
+
+ITEM_PIPELINES = [
+    'scrippa.pipelines.ScrippaPipeline'
+]

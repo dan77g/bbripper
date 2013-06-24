@@ -33,8 +33,10 @@ class ScrippaSpider(BaseSpider):
             item['year'] = year           
             items.append(item)
             self.log("Looking at year " + year, level=log.WARNING)
-            yield Request(url=year_url, meta={'yearitem': item}, callback=self.parse_year)
-
+            #yield Request(url=year_url, meta={'yearitem': item}, callback=self.parse_year)
+            
+        return item
+            
 
     def parse_year(self, response):
         yritem = response.meta.get('yearitem', None)
@@ -54,8 +56,10 @@ class ScrippaSpider(BaseSpider):
             month_url = urlbase + month_url             
             yritem['month_url'] = month_url
             yritem['month'] = month  
-            yield Request(url=month_url, meta={'monthitem': yritem}, callback=self.parse_month)
+            self.log("Looking at month " + month, level=log.WARNING)
+            #yield Request(url=month_url, meta={'monthitem': yritem}, callback=self.parse_month)
             
+        return yritem
 
     def parse_month(self, response):
         mnitem = response.meta['monthitem']
@@ -75,16 +79,17 @@ class ScrippaSpider(BaseSpider):
             mnitem['report_url'] = report_url
             mnitem['report'] = report
             
+            self.log("Looking at report " + report, level=log.WARNING)
                         
             print "======================="
             print "YEAR is " + mnitem['year']
             print "MONTH is " + mnitem['month']
             print "REPORT is " + mnitem['report']
             print "REPORT URL is " + mnitem['report_url']
-            yield Request(url=report_url, meta={'reportitem': mnitem}, callback=self.parse_report)
+            #yield Request(url=report_url, meta={'reportitem': mnitem}, callback=self.parse_report)
 
             
-        #return mnitem
+        return mnitem
 
     def parse_report(self, response):
         repitem = response.meta['reportitem']
@@ -98,11 +103,14 @@ class ScrippaSpider(BaseSpider):
             img_page = link.select('a/@title').extract()[0]
             img_url = urlbase + img_url
             repitem['img_url'] = img_url
-            
+                        
+            self.log("Looking at img_url " + img_url, level=log.WARNING)
+                        
             print "found img at " 
             print img_url 
             print " of page # "
             print img_page
             
+        
         return repitem
             
