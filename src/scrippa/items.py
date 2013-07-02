@@ -11,7 +11,7 @@ class ScrippaItem(Item):
     year = Field()
     year_title = Field()
     
-    month_url = Field()
+    #month_url = Field()
     month = Field()
     month_title = Field()
     

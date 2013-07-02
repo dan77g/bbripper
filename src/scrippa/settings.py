@@ -9,7 +9,7 @@
 BOT_NAME = 'scrippa'
 
 SPIDER_MODULES = ['scrippa.spiders']
-NEWSPIDER_MODULE = 'scrippa.spiders'
+NEWSPIDER_MODULE = 'scrippa.spiders'    
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'scrippa (+http://www.yourdomain.com)'

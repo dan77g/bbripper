@@ -29,13 +29,13 @@ class ScrippaSpider(BaseSpider):
             year_url = link.select('a/@href').extract()[0]
             year = link.select('a/strong/text()').extract()[0]
             year_url = urlbase + year_url
-            item['year_url'] = year_url
+            #item['year_url'] = year_url
             item['year'] = year           
             items.append(item)
             self.log("Looking at year " + year, level=log.WARNING)
-            #yield Request(url=year_url, meta={'yearitem': item}, callback=self.parse_year)
+            yield Request(url=year_url, meta={'yearitem': item}, callback=self.parse_year)
             
-        return item
+        #return items
             
 
     def parse_year(self, response):
@@ -45,21 +45,24 @@ class ScrippaSpider(BaseSpider):
         # get datemonth url and go to it
         hxs = HtmlXPathSelector(response)
         monthLinks = hxs.select('//div[@id="browse"]/ul/li')
-        year_title = hxs.select('//h1/text()').extract()
-        yritem['year_title'] = year_title
+        #year_title = hxs.select('//h1/text()').extract()
+        #yritem['year_title'] = year_title
 
         urlbase="http://www.fold3.com"
+
+        yritems = []
 
         for link in monthLinks:
             month_url = link.select('a/@href').extract()[0]
             month  = link.select('a/strong/text()').extract()[0]
             month_url = urlbase + month_url             
-            yritem['month_url'] = month_url
-            yritem['month'] = month  
+            #yritem['month_url'] = month_url
+            #yritem['month'] = month
+            #yritems.append(yritem) 
             self.log("Looking at month " + month, level=log.WARNING)
-            #yield Request(url=month_url, meta={'monthitem': yritem}, callback=self.parse_month)
+            yield Request(url=month_url, meta={'monthitem': yritem}, callback=self.parse_month)
             
-        return yritem
+        #return yritems
 
     def parse_month(self, response):
         mnitem = response.meta['monthitem']
@@ -67,42 +70,53 @@ class ScrippaSpider(BaseSpider):
         # get report url and go to it
         hxs = HtmlXPathSelector(response)
         reportLinks = hxs.select('//div[@id="browse"]/ul/li')
-        month_title = hxs.select('//h1/text()').extract()[0]
-        mnitem['month_title'] = month_title
-        mnitem['month'] = month_title
+        #' TEST
+        year = hxs.select('//h2/a/text()')[3].extract()
+        month = hxs.select('//h2/a/text()')[4].extract()
+        
+        
+        #month_title = hxs.select('//h1/text()').extract()[0]
+        #mnitem['month_title'] = month_title
+        #mnitem['month'] = month_title
         urlbase="http://www.fold3.com"
         
+        mnitems = []
+        
+        # FIXME - could be multiple pages ..... (if "Go to next page")
         for link in reportLinks:
             report_url = link.select('a/@href').extract()[0]
             report = link.select('a/strong/text()').extract()[0]
             report_url = urlbase + report_url
             mnitem['report_url'] = report_url
             mnitem['report'] = report
+            mnitem['month'] = month
+            mnitem['year'] = year
+            
+            mnitems.append(mnitem)
             
             self.log("Looking at report " + report, level=log.WARNING)
                         
-            print "======================="
-            print "YEAR is " + mnitem['year']
-            print "MONTH is " + mnitem['month']
-            print "REPORT is " + mnitem['report']
-            print "REPORT URL is " + mnitem['report_url']
-            #yield Request(url=report_url, meta={'reportitem': mnitem}, callback=self.parse_report)
-
-            
-        return mnitem
+        #    yield Request(url=report_url, meta={'reportitem': mnitem}, callback=self.parse_report)
+ 
+        return mnitems
 
     def parse_report(self, response):
         repitem = response.meta['reportitem']
         
         hxs = HtmlXPathSelector(response)
         imageLinks = hxs.select('//div[@id="browse"]/ul/li')
+        month_title = hxs.select('//h2/text()').extract()[3]
+        report_title = hxs.select('//h2/text()').extract()[4]
+
         urlbase="http://www.fold3.com"
+        repitems = []
         
         for link in imageLinks:
             img_url = link.select('a/@href').extract()[0]
             img_page = link.select('a/@title').extract()[0]
             img_url = urlbase + img_url
             repitem['img_url'] = img_url
+            #repitems.append(repitem)
                         
             self.log("Looking at img_url " + img_url, level=log.WARNING)
                         
@@ -112,5 +126,5 @@ class ScrippaSpider(BaseSpider):
             print img_page
             
         
-        return repitem
+        return repitems
             
