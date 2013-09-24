@@ -13,7 +13,7 @@ class ScrippaPipeline(object):
         #self.files = {}
         #self.log("MMMMMMMMMMMMMMMMMMMMMMMMMMAAAAAAAAAAAATE", level=log.WARNING)
         print "DDDDDDDDDDDDDDDDDDDDDDDDDUUUUUUUUUUUUUUUUUUUUUUUUUUUDE"
-        file = open('blimin_reports.json', 'w+b')
+        #file = open('1_reports.json', 'w+b')
         
     
     @classmethod
@@ -24,7 +24,7 @@ class ScrippaPipeline(object):
         return pipeline
 
     def spider_opened(self, spider):
-        file = open('duds_reports.json', 'w+b')
+        file = open('2_reports.json', 'w+b')
         #self.files[spider] = file
         self.exporter = JsonLinesItemExporter(file)
         self.exporter.start_exporting()
